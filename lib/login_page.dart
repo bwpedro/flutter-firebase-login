@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'auth.dart';
 
 class LoginPage extends StatefulWidget {
+  LoginPage({this.auth});
+  final BaseAuth auth;
 	@override
   State<StatefulWidget> createState() => new _LoginPageState();
 }
@@ -174,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
 	void cadastrarUsuario() async {
 		if(validaDados()){
 			try {
-				AuthResult user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _senha);
+				AuthResult user = await widget.auth.createUserWithEmailAndPassword(_email, _senha);
 				print("Created: $user");
 			} catch (error) {
 				print("Error:  $error");
@@ -185,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
 	void logarUsuario() async {
 		if(validaDados()){
 			try {
-				AuthResult user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _senha);
+				AuthResult user = await widget.auth.signInWithEmailAndPassword(_email, _senha);
 				print("Signed in: $user");
 			} catch (error) {
 				print("Error:  $error");
